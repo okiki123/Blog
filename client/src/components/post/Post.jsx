@@ -1,19 +1,24 @@
 import React from 'react';
 import './post.css'
-const Post = () => {
+import { Link } from 'react-router-dom'
+const Post = ({post}) => {
+  const PF = "http://localhost:5000/images/"
   return (
   <div className='post'>
-      <img className='postImg' src='https://themegoods-cdn-pzbycso8wng.stackpathdns.com/grandblog/demo/wp-content/uploads/2015/11/aboutme.jpg' alt='' />
+  {post.photo && (<img className='postImg' src={PF + post.photo} alt='' />)}
       <div className='postInfo'>
           <div className='postCats'>
-              <span className='postCat'>Music</span>
-              <span className='postCat'>Life</span>
+                  {post.categories.map((c) => (
+                    <span className='postCat'>{c.name}</span>
+                  ))}
           </div>
-          <span className='postTitle'>Proident aliquip dolor minim nulla unt </span>
+          <Link to={`/post/${post._id}`} className='link'>
+          <span className='postTitle'>{post.title}</span>
+          </Link>
           <hr/>
-          <span className='postDate'>1 hour ago</span>
+          <span className='postDate'>{new Date(post.createdAt).toDateString}</span>
       </div>
-      <p className='postDesc'>Enim consectetur magna voluptate officia excepteur. Commodo cupidatat nulla incididunt pariatur. Sint officia duis excepteur sunt aute id sint mollit dolore ipsum eu. Est dolor magna fugiat pariatur adipisicing Lorem. Laborum nostrud esse do ex aliqua sit incididunt voluptate.</p>
+      <p className='postDesc'>{post.desc}</p>
   </div>);
 };
 
